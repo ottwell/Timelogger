@@ -38,5 +38,26 @@ namespace Timelogger.Api.Controllers
             await Context.SaveChangesAsync();
             return Created(timeRegistration);
         }
+
+        [HttpPatch]
+        [ODataRoute("TimeRegistrations({key})")]
+        public async Task<IActionResult> UpdateTimeRegistration([FromODataUri] int key, [FromBody] Delta<TimeRegistration> patch)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var currentTimeRegistration = await Context.TimeRegistrations
+                .FirstOrDefaultAsync(t => t.Id == key);
+
+            if (currentTimeRegistration == null)
+            {
+                return NotFound();
+            }
+
+            patch.Patch(currentTimeRegistration);
+            await Context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }

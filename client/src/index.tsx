@@ -1,5 +1,7 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import Application from './app/App';
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+import Main from "./app/components/main/Main";
+import { initializeIcons } from "@fluentui/font-icons-mdl2";
 
-ReactDOM.render(<Application />, document.getElementById('root'));
+initializeIcons();
+ReactDOM.render(<Main />, document.getElementById("root"));
