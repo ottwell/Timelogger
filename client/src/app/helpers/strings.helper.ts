@@ -1,6 +1,9 @@
 import { constantValues } from "./constants.helper";
 
 const texts = {
+  pageHeader: {
+    default: "TimeLogger",
+  },
   loadError: {
     default: "error loading data",
   },

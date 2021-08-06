@@ -35,7 +35,7 @@ export default class ProjectsDisplay extends React.Component<IProjectsDisplayPro
       showCompletedProjects: false,
       loadingCustomers: false,
     };
-    this._onToggleSelectedCustomer = this._onToggleSelectedCustomer.bind(this);
+    this._onToggleSelectedCustomers = this._onToggleSelectedCustomers.bind(this);
     this._onToggleShowCompletedProjects = this._onToggleShowCompletedProjects.bind(this);
     this._onLoadCustomers = this._onLoadCustomers.bind(this);
     this._getColumns = this._getColumns.bind(this);
@@ -53,7 +53,7 @@ export default class ProjectsDisplay extends React.Component<IProjectsDisplayPro
           }}
         >
           <Stack.Item align="auto">
-            <h1>TimeLogger</h1>
+            <h1>{getText("pageHeader")}</h1>
           </Stack.Item>
         </Stack>
         {this.state.loading && <Spinner size={SpinnerSize.large} />}
@@ -81,7 +81,7 @@ export default class ProjectsDisplay extends React.Component<IProjectsDisplayPro
                       })}
                       placeholder={getText("customerFilterDropdownPlaceholder")}
                       selectedKeys={this.state.selectedCustomerIds}
-                      onChange={this._onToggleSelectedCustomer}
+                      onChange={this._onToggleSelectedCustomers}
                       multiSelect={true}
                       disabled={this.state.loadingCustomers}
                       label={getText("customerFilterDropdownLabel")}
@@ -123,8 +123,7 @@ export default class ProjectsDisplay extends React.Component<IProjectsDisplayPro
     }
   }
 
-  private _onToggleSelectedCustomer(event: React.FormEvent<HTMLDivElement>, selectedOption?: IDropdownOption<any> | undefined): void {
-    console.log(event);
+  private _onToggleSelectedCustomers(event: React.FormEvent<HTMLDivElement>, selectedOption?: IDropdownOption<any> | undefined): void {
     if (selectedOption) {
       this.setState({
         selectedCustomerIds: selectedOption.selected
@@ -135,14 +134,12 @@ export default class ProjectsDisplay extends React.Component<IProjectsDisplayPro
   }
 
   private _onToggleShowCompletedProjects(event: React.MouseEvent<HTMLElement, MouseEvent>, checked?: boolean | undefined): void {
-    console.log(event);
     this.setState({
       showCompletedProjects: checked as boolean,
     });
   }
 
-  private async _onLoadCustomers(e: any): Promise<void> {
-    console.log(e);
+  private async _onLoadCustomers(): Promise<void> {
     if (this.state.allCustomers.length === 0) {
       try {
         this.setState({

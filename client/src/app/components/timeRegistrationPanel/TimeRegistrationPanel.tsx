@@ -17,7 +17,6 @@ export default class TimeRegistrationPanel extends React.Component<ITimeRegistra
       savingData: false,
     };
     this._debouncedUpdateFunc = debounce((e, newValue) => {
-      console.log(e);
       this._handleTimeRegistrationChange({
         Comment: newValue ? newValue : "",
       });
@@ -93,7 +92,6 @@ export default class TimeRegistrationPanel extends React.Component<ITimeRegistra
   }
 
   private _onChangeTimeInput(e: any, input: string | undefined): void {
-    console.log(e);
     const _timeReg = this.state.pendingTimeRegistration;
     _timeReg.TimeLoggedInMinutes = input ? input : "";
     this.setState({
@@ -106,7 +104,6 @@ export default class TimeRegistrationPanel extends React.Component<ITimeRegistra
   }
 
   private _onChangeComment(e: any, val: string | undefined): void {
-    console.log(e);
     const _timeReg = this.state.pendingTimeRegistration;
     _timeReg.Comment = val ? val : "";
     this.setState({

@@ -24,7 +24,7 @@ namespace Timelogger.Helpers
                     {
                         DeadLine = DateTime.Now.AddDays(y * 5),
                         Name = $"Project_{y + 1}",
-                        Status = Enum.GetName(typeof(ProjectStatus), ProjectStatus.InProgress),
+                        Status = (y+1)%3 == 0 ? Enum.GetName(typeof(ProjectStatus), ProjectStatus.InProgress) : Enum.GetName(typeof(ProjectStatus), ProjectStatus.Completed),
                         TimeRegistrations = new List<TimeRegistration>(),
                         Customer = cus,
                         CustomerId = cus.Id
@@ -35,7 +35,7 @@ namespace Timelogger.Helpers
                         var reg = new TimeRegistration()
                         {
                             Comment = $"Comment_{z + 1}",
-                            TimeLoggedInMinutes = z * 30,
+                            TimeLoggedInMinutes = z == 0 ? 30 : z * 30,
                             Project = proj,
                             ProjectId = proj.Id,
                             Date = DateTime.Now.AddDays(z)

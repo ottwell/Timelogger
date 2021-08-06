@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Timelogger.Entities;
+using Timelogger.Enums;
 
 namespace Timelogger.Api.Controllers
 {
@@ -32,6 +33,12 @@ namespace Timelogger.Api.Controllers
         {
             if (!ModelState.IsValid)
             {
+                return BadRequest(ModelState);
+            }
+            var project = await Context.Projects.FirstOrDefaultAsync(p => p.Id == timeRegistration.ProjectId);
+            if (project.Status == Enum.GetName(typeof(ProjectStatus), ProjectStatus.Completed))
+            {
+                ModelState.AddModelError("ProjectClosed", "this project is completed and therefore cannot recieve new time registrations");
                 return BadRequest(ModelState);
             }
             Context.TimeRegistrations.Add(timeRegistration);

@@ -83,7 +83,7 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
       Comment: "",
       Date: new Date().toISOString(),
       ProjectId: this.props.project.Id,
-      TimeLoggedInMinutes: 30,
+      TimeLoggedInMinutes: constantValues.miminalTimeRegistrationInMinuts,
       Id: -1,
     };
     this._onOpenTimeRegistrationPanel(e, _newReg);
@@ -111,6 +111,20 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
     });
   }
 
+  private async _getTimeRegistrations(): Promise<void> {
+    this.setState({
+      loading: true,
+      loadError: "",
+    });
+    const _regs = await this.props.apiService.get(constantValues.api.endpoints.get.timeRegistrations(this.props.project.Id));
+    this.setState({
+      loadedTimeRegistrations: true,
+      allTimeRegistrations: _regs as ITimeRegistration[],
+      loading: false,
+      isCollapsed: false,
+    });
+  }
+
   private _getGroupHeader(props: IDetailsGroupDividerProps | undefined): JSX.Element {
     if (props) {
       const _daysUntilDeadline = getDaysUntilDeadline(this.props.project.DeadLine);
@@ -118,8 +132,7 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
       return (
         <div
           style={{ backgroundColor: _background, height: 50 }}
-          onClick={(e: any) => {
-            console.log(e);
+          onClick={() => {
             if (!this.state.loadedTimeRegistrations) {
               this._getTimeRegistrations()
                 .then(() => {})
@@ -148,20 +161,6 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
       );
     }
     return <></>;
-  }
-
-  private async _getTimeRegistrations(): Promise<void> {
-    this.setState({
-      loading: true,
-      loadError: "",
-    });
-    const _regs = await this.props.apiService.get(constantValues.api.endpoints.get.timeRegistrations(this.props.project.Id));
-    this.setState({
-      loadedTimeRegistrations: true,
-      allTimeRegistrations: _regs as ITimeRegistration[],
-      loading: false,
-      isCollapsed: false,
-    });
   }
 
   private _getColumns(): IColumn[] {
@@ -195,7 +194,6 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
         name: "",
         minWidth: 16,
         onRender: (item: ITimeRegistration): JSX.Element => {
-          console.log(item.ProjectId);
           return (
             <Icon
               iconName="Edit"

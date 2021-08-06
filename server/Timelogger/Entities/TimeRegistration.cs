@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Timelogger.Entities
 {
@@ -6,6 +7,7 @@ namespace Timelogger.Entities
     {
         public string Comment { get; set; }
 
+        [Range(30, int.MaxValue)]
         public int TimeLoggedInMinutes { get; set; }
 
         public virtual Project Project { get; set; }
