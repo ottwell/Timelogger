@@ -20,7 +20,7 @@ export const filterProjects = (allProjects: IProject[], customerIds: number[], s
 export const getDaysUntilDeadline = (input: string): number => {
   const _deadline = new Date(input);
   const _now = new Date();
-  const diffTime = Math.abs(_deadline.getTime() - _now.getTime());
+  const diffTime = _deadline.getTime() - _now.getTime();
   return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1;
 };
 
