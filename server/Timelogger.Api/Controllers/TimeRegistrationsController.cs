@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNet.OData;
 using Microsoft.AspNet.OData.Routing;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Timelogger.DataAccess;
 using Timelogger.Entities;
 using Timelogger.Enums;
 
@@ -16,15 +15,15 @@ namespace Timelogger.Api.Controllers
     [ApiController]
     public class TimeRegistrationsController : BaseODataController
     {
-        public TimeRegistrationsController(ApiContext context) : base(context) { }
+        public TimeRegistrationsController(IRepository repo) : base(repo) { }
 
         [HttpGet]
         [ODataRoute("TimeRegistrations")]
         [EnableQuery]
         public async Task<ActionResult<IQueryable<TimeRegistration>>> Get()
         {
-            await Context.TimeRegistrations.LoadAsync();
-            return Ok(Context.TimeRegistrations);
+            var timeRegs = await Repo.GetAll<TimeRegistration>();
+            return Ok(timeRegs);
         }
 
         [HttpPost]
@@ -35,15 +34,14 @@ namespace Timelogger.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var project = await Context.Projects.FirstOrDefaultAsync(p => p.Id == timeRegistration.ProjectId);
+            var project = await Repo.GetById<Project>(timeRegistration.ProjectId);
             if (project.Status == Enum.GetName(typeof(ProjectStatus), ProjectStatus.Completed))
             {
                 ModelState.AddModelError("ProjectClosed", "this project is completed and therefore cannot recieve new time registrations");
                 return BadRequest(ModelState);
             }
-            Context.TimeRegistrations.Add(timeRegistration);
-            await Context.SaveChangesAsync();
-            return Created(timeRegistration);
+            var timeReg = await Repo.Create(timeRegistration);
+            return Created(timeReg);
         }
 
         [HttpPatch]
@@ -54,16 +52,21 @@ namespace Timelogger.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var currentTimeRegistration = await Context.TimeRegistrations
-                .FirstOrDefaultAsync(t => t.Id == key);
-
+            var currentTimeRegistration = await Repo.GetById<TimeRegistration>(key);
             if (currentTimeRegistration == null)
             {
                 return NotFound();
             }
-
-            patch.Patch(currentTimeRegistration);
-            await Context.SaveChangesAsync();
+            var validationErrors = await Repo.Patch<TimeRegistration>(currentTimeRegistration, patch);
+            if (validationErrors.Count() > 0)
+            {
+                foreach (var error in validationErrors)
+                {
+                    ModelState.AddModelError(error.MemberNames.First(), error.ErrorMessage);
+                    return BadRequest(ModelState);
+                }
+                
+            }
             return NoContent();
         }
     }

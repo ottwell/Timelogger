@@ -9,6 +9,8 @@ namespace Timelogger.Helpers
     {
         public static void SeedDatabase(ApiContext context)
         {
+            context.Database.EnsureDeleted();
+            context.Database.EnsureCreated();
             var customers = new List<Customer>();
 
             for (int x = 0; x < 4; x++)
@@ -24,7 +26,7 @@ namespace Timelogger.Helpers
                     {
                         DeadLine = DateTime.Now.AddDays(y * 5),
                         Name = $"Project_{y + 1}",
-                        Status = (y+1)%3 == 0 ? Enum.GetName(typeof(ProjectStatus), ProjectStatus.InProgress) : Enum.GetName(typeof(ProjectStatus), ProjectStatus.Completed),
+                        Status = (y + 1) % 3 == 0 ? Enum.GetName(typeof(ProjectStatus), ProjectStatus.Completed) : Enum.GetName(typeof(ProjectStatus), ProjectStatus.InProgress),
                         TimeRegistrations = new List<TimeRegistration>(),
                         Customer = cus,
                         CustomerId = cus.Id

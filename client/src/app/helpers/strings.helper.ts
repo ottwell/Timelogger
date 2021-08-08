@@ -55,6 +55,9 @@ const texts = {
   addNewTimeRegistrationButtonTitle: {
     default: "Add new time registration for this project",
   },
+  projectCompleted: {
+    default: "Project Completed",
+  },
 };
 
 export const getText = (key: string, langCode?: string): string => {

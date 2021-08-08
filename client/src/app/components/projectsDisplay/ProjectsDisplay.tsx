@@ -46,12 +46,7 @@ export default class ProjectsDisplay extends React.Component<IProjectsDisplayPro
     const _projects = filterProjects(this.state.allProjects, this.state.selectedCustomerIds, this.state.showCompletedProjects);
     return (
       <>
-        <Stack
-          tokens={{
-            childrenGap: 5,
-            padding: 10,
-          }}
-        >
+        <Stack>
           <Stack.Item align="auto">
             <h1>{getText("pageHeader")}</h1>
           </Stack.Item>
@@ -69,10 +64,9 @@ export default class ProjectsDisplay extends React.Component<IProjectsDisplayPro
                     padding: 10,
                   }}
                 >
-                  <Stack.Item align="baseline">
+                  <Stack.Item align="baseline" style={{ width: 250 }}>
                     <Dropdown
                       onClick={this._onLoadCustomers}
-                      dropdownWidth={150}
                       options={this.state.allCustomers.map((cus: ICustomer) => {
                         return {
                           key: cus.Id,
@@ -182,6 +176,9 @@ export default class ProjectsDisplay extends React.Component<IProjectsDisplayPro
             },
           },
           border: "none",
+        },
+        cell: {
+          padding: 0,
         },
       };
       return <DetailsRow {...props} styles={rowStyles} />;

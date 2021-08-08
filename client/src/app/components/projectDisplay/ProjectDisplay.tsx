@@ -41,7 +41,6 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
             onClick={this._onCreateNewTimeRegistration}
           />
         )}
-
         <DetailsList
           items={this.state.allTimeRegistrations}
           selectionMode={SelectionMode.none}
@@ -150,12 +149,12 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
             }
           }}
         >
-          {this.state.loading && <Icon iconName="HourGlass" />}
-          {!this.state.loading && <Icon iconName={(props.group as IGroup).isCollapsed ? "ChevronRight" : "ChevronDown"} style={{ cursor: "default" }} />}
+          {this.state.loading && <Icon iconName="HourGlass" style={{ cursor: "default", marginRight: 10, marginLeft: 5, marginTop: 15 }} />}
+          {!this.state.loading && <Icon iconName={(props.group as IGroup).isCollapsed ? "ChevronRight" : "ChevronDown"} style={{ cursor: "default", marginRight: 10, marginLeft: 5, marginTop: 15 }} />}
 
           {this.props.project.Name}
-          <div style={{ float: "right" }}>
-            <span>{`${getText("daysUntilDeadline")}: ${_daysUntilDeadline}`} </span>
+          <div style={{ float: "right", marginRight: 10, marginTop: 15 }}>
+            <span>{this.props.project.Status === ProjectStatus.Completed.toString() ? getText("projectCompleted") : `${getText("daysUntilDeadline")}: ${_daysUntilDeadline}`} </span>
           </div>
         </div>
       );

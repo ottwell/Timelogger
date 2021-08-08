@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Timelogger.DataAccess;
 using Timelogger.Entities;
 
 namespace Timelogger.Api.Controllers
@@ -12,16 +13,16 @@ namespace Timelogger.Api.Controllers
     
     public class CustomersController : BaseODataController
     {
-        public CustomersController(ApiContext context) : base(context) { }
+        public CustomersController(IRepository repo) : base(repo) { }
 
 
         [HttpGet]
         [ODataRoute("Customers")]
         [EnableQuery]
-        public async Task<ActionResult<IQueryable<Customer>>> Get()
+        public async Task<ActionResult<IQueryable<Customer>>> GetAll()
         {
-            await Context.Customers.LoadAsync();
-            return Ok(Context.Customers);
+            var customers = await Repo.GetAll<Customer>();
+            return Ok(customers);
         }
     }
 }

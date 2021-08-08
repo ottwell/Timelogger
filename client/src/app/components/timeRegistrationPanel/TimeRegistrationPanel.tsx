@@ -20,7 +20,7 @@ export default class TimeRegistrationPanel extends React.Component<ITimeRegistra
       this._handleTimeRegistrationChange({
         Comment: newValue ? newValue : "",
       });
-    }, 750);
+    }, 1500);
     this._onChangeDate = this._onChangeDate.bind(this);
     this._onChangeTimeInput = this._onChangeTimeInput.bind(this);
     this._onChangeComment = this._onChangeComment.bind(this);

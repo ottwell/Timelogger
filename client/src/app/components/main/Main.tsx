@@ -21,7 +21,11 @@ export default class Main extends React.Component<{}, IMainState> {
     return (
       <>
         {this.state.error && <MessageBar messageBarType={MessageBarType.error}>{this.state.error}</MessageBar>}
-        {!this.state.error && <ProjectsDisplay apiService={this._apiService} onLoadError={this._onLoadError} />}
+        {!this.state.error && (
+          <div style={{ width: 1000 }}>
+            <ProjectsDisplay apiService={this._apiService} onLoadError={this._onLoadError} />
+          </div>
+        )}
       </>
     );
   }

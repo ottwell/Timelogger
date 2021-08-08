@@ -4,13 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using Timelogger.DataAccess;
 using Timelogger.Entities;
 
 namespace Timelogger.Api.Controllers
 {
     public class ProjectsController : BaseODataController
     {
-        public ProjectsController(ApiContext context) : base(context) { }
+        public ProjectsController(IRepository repo) : base(repo) { }
 
 
         [HttpGet]
@@ -18,38 +19,23 @@ namespace Timelogger.Api.Controllers
         [EnableQuery]
         public async Task<ActionResult<IQueryable<Project>>> Get()
         {
-            await Context.Projects.LoadAsync();
-            return Ok(Context.Projects);
+            var projects = await Repo.GetAll<Project>();
+            return Ok(projects);
         }
 
         [HttpGet]
         [ODataRoute("Projects({key})")]
         [EnableQuery]
-        public async Task<ActionResult> Get([FromODataUri]int key)
+        public async Task<ActionResult<Project>> GetById([FromODataUri]int key)
         {
-            var data = await Context.Projects.FirstOrDefaultAsync(p => p.Id == key);
-            return Ok(data);
-        }
 
-        [HttpPatch]
-        [ODataRoute("Projects({key})")]
-        public async Task<IActionResult> UpdateProject([FromODataUri]int key, [FromBody] Delta<Project> patch)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var currentProject = await Context.Projects
-                .FirstOrDefaultAsync(p => p.Id == key);
-
-            if (currentProject == null)
+            var project = await Repo.GetById<Project>(key);
+            if (project == null)
             {
                 return NotFound();
             }
-
-            patch.Patch(currentProject);
-            await Context.SaveChangesAsync();
-            return NoContent();
+            return Ok(project);
         }
+
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Timelogger.Helpers;
 using Microsoft.AspNet.OData.Extensions;
+using Timelogger.DataAccess;
 
 namespace Timelogger.Api
 {
@@ -32,6 +33,7 @@ namespace Timelogger.Api
         {
             services.AddDbContext<ApiContext>(opt => { opt.UseLazyLoadingProxies(); opt.UseInMemoryDatabase("e-conomic interview"); opt.EnableSensitiveDataLogging(); });
             services.AddOData();
+            services.AddScoped<IRepository, Repository>();
             services.AddLogging(builder =>
             {
                 builder.AddConsole();
