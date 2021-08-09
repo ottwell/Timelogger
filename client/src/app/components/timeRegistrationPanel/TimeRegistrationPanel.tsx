@@ -13,6 +13,7 @@ export default class TimeRegistrationPanel extends React.Component<ITimeRegistra
     super(props);
     this.state = {
       pendingTimeRegistration: props.timeRegistration,
+      originalTimeRegistration: cloneDeep(props.timeRegistration),
       saveError: "",
       savingData: false,
     };
@@ -31,7 +32,13 @@ export default class TimeRegistrationPanel extends React.Component<ITimeRegistra
   public render(): React.ReactElement<ITimeRegistrationPanelProps> {
     return (
       <>
-        <Panel isOpen={this.props.visible} headerText={this.props.projectName} isBlocking={true} onDismiss={() => this.props.onDismiss(this.state.pendingTimeRegistration)} isFooterAtBottom={true}>
+        <Panel
+          isOpen={this.props.visible}
+          headerText={this.props.projectName}
+          isBlocking={true}
+          onDismiss={() => this.props.onDismiss(this.state.pendingTimeRegistration, this.state.originalTimeRegistration)}
+          isFooterAtBottom={true}
+        >
           <Stack
             tokens={{
               childrenGap: 25,
@@ -127,6 +134,7 @@ export default class TimeRegistrationPanel extends React.Component<ITimeRegistra
       await this.props.apiService.patch(constantValues.api.endpoints.patch.timeRegistrations(this.state.pendingTimeRegistration.Id), _body);
       this.setState({
         savingData: false,
+        originalTimeRegistration: this.state.pendingTimeRegistration,
       });
     } catch (ex) {
       this.setState({
@@ -152,7 +160,7 @@ export default class TimeRegistrationPanel extends React.Component<ITimeRegistra
       const _resp = await this.props.apiService.post(constantValues.api.endpoints.post.timeRegistrations, _body);
       const _timeReg = this.state.pendingTimeRegistration;
       _timeReg.Id = _resp.Id;
-      this.props.onDismiss(_timeReg);
+      this.props.onDismiss(_timeReg, this.state.originalTimeRegistration);
     } catch (ex) {
       this.setState({
         savingData: false,

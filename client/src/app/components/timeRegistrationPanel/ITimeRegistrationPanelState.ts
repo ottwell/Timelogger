@@ -4,4 +4,5 @@ export interface ITimeRegistrationPanelState {
   savingData: boolean;
   saveError: string;
   pendingTimeRegistration: ITimeRegistration;
+  originalTimeRegistration: ITimeRegistration;
 }

@@ -5,6 +5,6 @@ export interface ITimeRegistrationPanelProps {
   apiService: ApiService;
   timeRegistration: ITimeRegistration;
   visible: boolean;
-  onDismiss(timeReg: ITimeRegistration): void;
+  onDismiss(timeReg: ITimeRegistration, originalTimeReg: ITimeRegistration): void;
   projectName: string;
 }

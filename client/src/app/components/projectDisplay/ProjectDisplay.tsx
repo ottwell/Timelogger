@@ -1,7 +1,7 @@
 import { CollapseAllVisibility, DetailsList, DetailsRow, IColumn, Icon, IDetailsGroupDividerProps, IDetailsRowProps, IDetailsRowStyles, IGroup, SelectionMode } from "@fluentui/react";
 import * as React from "react";
 import { constantValues } from "../../helpers/constants.helper";
-import { getDaysUntilDeadline, getGuid, getProjectBackgroundColor } from "../../helpers/general.helper";
+import { getDaysUntilDeadline, getGuid, getProjectBackgroundColor, onGetNumberErrorMessage } from "../../helpers/general.helper";
 import { getText } from "../../helpers/strings.helper";
 import { ITimeRegistration } from "../../interfaces/ITimeRegistration";
 import { ProjectStatus } from "../../interfaces/ProjectStatus.enum";
@@ -96,11 +96,21 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
     });
   }
 
-  private _onDismissTimeRegistrationPanel(timeReg: ITimeRegistration): void {
-    const _allRegs = this.state.allTimeRegistrations;
+  private _onDismissTimeRegistrationPanel(timeReg: ITimeRegistration, originalTimeReg: ITimeRegistration): void {
+    debugger;
+    let _allRegs = this.state.allTimeRegistrations;
     if (timeReg.Id !== -1) {
-      if (_allRegs.filter((reg) => reg.Id === timeReg.Id).length === 0) {
-        _allRegs.push(timeReg);
+      if (!onGetNumberErrorMessage(timeReg.TimeLoggedInMinutes.toString())) {
+        if (_allRegs.filter((reg) => reg.Id === timeReg.Id).length === 0) {
+          _allRegs.push(timeReg);
+        }
+      } else {
+        _allRegs = _allRegs.map((tr: ITimeRegistration) => {
+          if (tr.Id === timeReg.Id) {
+            tr = originalTimeReg;
+          }
+          return tr;
+        });
       }
     }
     this.setState({
