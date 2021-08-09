@@ -1,8 +1,7 @@
 ### TimeLogger Challenge
 
 A POC application. API layer built using .NET Core3.1. Database simulated using Entity Framework core in-memory functionality. Unit tests implemented using XUNIT.
-Frontend built using Create-React-App and Typescript. Limited styling and UI components built using fluent UI.
-Unit tests written using Jest
+Frontend built using Create-React-App and Typescript. Limited styling and UI components are from fluent UI. Unit tests written using Jest
 
 ### User stories implemented
 1. Adding and editing time registrations to specific projects.
@@ -10,7 +9,7 @@ Unit tests written using Jest
 3. Displaying projects ordered by deadline date.
 
 ##### API Description
-Api layer includes partial support of ODATA queries. Add and Patch are supported in relevant controllers, GET requests can include the following query action: 
+Api layer includes support of ODATA queries. Add and Patch are supported in relevant controllers, GET requests can include the following query actions: 
 - Select
 - Expand
 - Filter
@@ -24,26 +23,26 @@ Api layer includes partial support of ODATA queries. Add and Patch are supported
 
 ##### Building
 1. Clone or download the repository.
-2. Run `cd server\TimeLogger.Api`
+2. Navigate to `\server`
 3. Run `dotnet build`.
 4. Navigate to `\client`.
 6. Run `npm install`.
 
 ##### Running locally
-1. Clone or download the repository.
-2. Run `cd server\TimeLogger.Api`
-3. Run `dotnet run`.
-4. The server is started and listening at http://localhost:3001.
+1. Navigate to `\server\TimeLogger.Api`.
+2. Run `dotnet run`.
+3. The server is started and listening at http://localhost:3001.
+4. Open new cmd session.
 5. Navigate to `\client`.
-6. Run `npm run start`.
+6. Run `npm start`.
 7. The application is running on http://localhost:3000.
 
 ##### Testing
-1. Clone or download the repository.
-2. Run `cd server\TimeLogger.Api`
-3. Run `dotnet test` to test the API layer.
+2. Navigate to `\server`.
+3. Run `dotnet test` (add `--collect:"XPlat Code Coverage` to generate a report). 
 4. Navigate to `\client`.
-5. Run `npm run test` to test the client app.
+5. Run `npm test`.
+6. Enter `a` after test interface lodas to run all tests.
 
 ##### Known Issues
 1. Styling is limited. To be blunt, the client app looks like dog shit. That is due to the fact that styling was not a part of the original challenge. 
