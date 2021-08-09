@@ -24,7 +24,10 @@ Api layer includes partial support of ODATA queries. Add and Patch are supported
 
 ##### Building
 1. Clone or download the repository.
-2. Run `dotnet build`.
+2. Run `cd server\TimeLogger.Api`
+3. Run `dotnet build`.
+4. Navigate to `\client`.
+6. Run `npm install`.
 
 ##### Running locally
 1. Clone or download the repository.
