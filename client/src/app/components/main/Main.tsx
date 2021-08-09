@@ -8,8 +8,8 @@ import { IMainState } from "./IMainState";
 export default class Main extends React.Component<{}, IMainState> {
   private _apiService: ApiService;
 
-  constructor() {
-    super({});
+  constructor(props: Readonly<{}>) {
+    super(props);
     this._apiService = new ApiService(process.env.REACT_APP_API_BASE_URL as string);
     this.state = {
       error: "",
