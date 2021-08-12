@@ -5,7 +5,7 @@ it("returns correct value for key", () => {
   expect(val).toStrictEqual("TimeLogger");
 });
 
-it("returns default text for non existatn key", () => {
+it("returns default text for non existant key", () => {
   const val = getText("adkjflkdj");
   expect(val).toStrictEqual("text not found");
 });

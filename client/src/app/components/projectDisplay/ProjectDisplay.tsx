@@ -1,7 +1,7 @@
 import { CollapseAllVisibility, DetailsList, DetailsRow, IColumn, Icon, IDetailsGroupDividerProps, IDetailsRowProps, IDetailsRowStyles, IGroup, SelectionMode } from "@fluentui/react";
 import * as React from "react";
 import { constantValues } from "../../helpers/constants.helper";
-import { getDaysUntilDeadline, getGuid, getProjectBackgroundColor, onGetNumberErrorMessage } from "../../helpers/general.helper";
+import { getDaysUntilDeadline, getProjectBackgroundColor, onGetNumberErrorMessage } from "../../helpers/general.helper";
 import { getText } from "../../helpers/strings.helper";
 import { ITimeRegistration } from "../../interfaces/ITimeRegistration";
 import { ProjectStatus } from "../../interfaces/ProjectStatus.enum";
@@ -47,7 +47,7 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
           groups={[
             {
               count: this.state.allTimeRegistrations.length,
-              key: getGuid(),
+              key: `projectgroup_${this.props.project.Id}`,
               name: "",
               startIndex: 0,
               isCollapsed: this.state.isCollapsed,
@@ -175,7 +175,7 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
   private _getColumns(): IColumn[] {
     return [
       {
-        key: getGuid(),
+        key: `date_column_${this.props.project.Id}`,
         name: "",
         minWidth: 80,
         onRender: (item: ITimeRegistration): JSX.Element => {
@@ -183,7 +183,7 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
         },
       },
       {
-        key: getGuid(),
+        key: `time_column_${this.props.project.Id}`,
         name: "",
         minWidth: 30,
         onRender: (item: ITimeRegistration): JSX.Element => {
@@ -191,7 +191,7 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
         },
       },
       {
-        key: getGuid(),
+        key: `comment_column_${this.props.project.Id}`,
         name: "",
         minWidth: 200,
         onRender: (item: ITimeRegistration): JSX.Element => {
@@ -199,7 +199,7 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
         },
       },
       {
-        key: getGuid(),
+        key: `panel_column_${this.props.project.Id}`,
         name: "",
         minWidth: 16,
         onRender: (item: ITimeRegistration): JSX.Element => {
@@ -215,7 +215,7 @@ export default class ProjectDisplay extends React.PureComponent<IProjectDisplayP
         },
       },
       {
-        key: getGuid(),
+        key: `space_column_${this.props.project.Id}`,
         name: "",
         minWidth: 30,
       },

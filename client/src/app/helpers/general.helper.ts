@@ -39,14 +39,6 @@ export const getProjectBackgroundColor = (daysUntil: number, status: string): st
   return _background;
 };
 
-export const getGuid = (): string => {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0,
-      v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
-};
-
 export const onGetNumberErrorMessage = (input: string): string => {
   const _pattern = /^(0|([1-9]\d*))$/;
   if (!_pattern.test(input)) return getText("notANumberError");

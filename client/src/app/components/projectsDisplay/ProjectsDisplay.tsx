@@ -16,7 +16,7 @@ import {
 } from "@fluentui/react";
 import * as React from "react";
 import { constantValues } from "../../helpers/constants.helper";
-import { filterProjects, getGuid } from "../../helpers/general.helper";
+import { filterProjects } from "../../helpers/general.helper";
 import { getText } from "../../helpers/strings.helper";
 import { ICustomer } from "../../interfaces/ICustomer";
 import { IProject } from "../../interfaces/IProject";
@@ -156,7 +156,7 @@ export default class ProjectsDisplay extends React.Component<IProjectsDisplayPro
   private _getColumns(): IColumn[] {
     return [
       {
-        key: getGuid(),
+        key: `project_column`,
         name: "",
         minWidth: 500,
         onRender: (project: IProject): JSX.Element => {

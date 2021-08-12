@@ -23,10 +23,6 @@ it("can validate number input with range", () => {
   expect(onGetNumberErrorMessage("60")).toStrictEqual("");
 });
 
-it("can generate guid", () => {
-  expect(getGuid()).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
-});
-
 it("can return correct background", () => {
   const theme = getTheme();
   expect(getProjectBackgroundColor(-2, ProjectStatus.InProgress.toString())).toStrictEqual(theme.semanticColors.errorBackground);
